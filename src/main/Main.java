@@ -16,6 +16,8 @@ public class Main {
 	
 	public static void initializeModel(Model model){
 		
+		System.out.println("inicializou o model");
+		
 	}
 
 }

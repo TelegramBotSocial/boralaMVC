@@ -1,4 +1,4 @@
-package main.view;
+package main;
 
 import java.util.List;
 
@@ -30,10 +30,9 @@ public class View implements Observer{
 	int indexMsg=0;
 	
 	ControllerSearch controllerSearch; 
-	
-	//boolean searchBehaviour = false;
-	
 	private Model model;
+	
+	boolean searchBehaviour = false;
 	
 	public View(Model model){
 		this.model = model; 
@@ -47,7 +46,7 @@ public class View implements Observer{
 
 		while (true){
 	
-			updatesResponse =  bot.execute(new GetUpdates().limit(100).offset(indexMsg));
+			updatesResponse = bot.execute(new GetUpdates().limit(100).offset(indexMsg));
 			
 			List<Update> updates = updatesResponse.updates();
 
@@ -55,22 +54,14 @@ public class View implements Observer{
 				
 				indexMsg = update.updateId()+1;
 				
-				if(this.searchBehaviour==true){
-					this.callController(update);
-					
-				} else if(update.message().text().equals("locations")){
-					//setControllerSearch(new ControllerSearchSudent(model, this));
-					//sendResponse = bot.execute(new SendMessage(update.message().chat().id(),"what's the student name?"));
-					//this.searchBehaviour = true;
-					
-				} else if(update.message().text().equals("events")){
-					//setControllerSearch(new ControllerSearchSudent(model, this));
-					//sendResponse = bot.execute(new SendMessage(update.message().chat().id(),"what's the student name?"));
-					//this.searchBehaviour = true;
-					
-				} else {
-					sendResponse = bot.execute(new SendMessage(update.message().chat().id(),"Type teacher or student"));
-				}
+				String resultText = update.message().text();
+				if(resultText!=null){
+					setControllerSearch(new ControllerSearchString(model, this));
+	
+				}else{
+					setControllerSearch(new ControllerSearchLocation(model, this));
+				
+				}				
 				
 			}
 
@@ -79,11 +70,11 @@ public class View implements Observer{
 	}
 	
 	public void callController(Update update){
-		this.controllerSearch.search(update);
+		//this.controllerSearch.search(update);
 	}
 	
 	public void update(long chatId){
-		sendResponse = bot.execute(new SendMessage(chatId));
+		//sendResponse = bot.execute(new SendMessage(chatId));
 		this.searchBehaviour = false;
 	}
 	
