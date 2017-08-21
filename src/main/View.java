@@ -32,8 +32,6 @@ public class View implements Observer{
 	ControllerSearch controllerSearch; 
 	private Model model;
 	
-	boolean searchBehaviour = false;
-	
 	public View(Model model){
 		this.model = model; 
 	}
@@ -57,10 +55,11 @@ public class View implements Observer{
 				String resultText = update.message().text();
 				if(resultText!=null){
 					setControllerSearch(new ControllerSearchString(model, this));
+					this.callController(update);
 	
 				}else{
-					setControllerSearch(new ControllerSearchLocation(model, this));
-				
+					//setControllerSearch(new ControllerSearchLocation(model, this));
+					System.out.println("localização enviada");
 				}				
 				
 			}
@@ -70,16 +69,17 @@ public class View implements Observer{
 	}
 	
 	public void callController(Update update){
-		//this.controllerSearch.search(update);
+		this.controllerSearch.search(update);
 	}
 	
-	public void update(long chatId){
-		//sendResponse = bot.execute(new SendMessage(chatId));
-		this.searchBehaviour = false;
+	public void update(long chatId, String resp){
+		sendResponse = bot.execute(new SendMessage(chatId, resp).parseMode(ParseMode.HTML));
+	
 	}
 	
 	public void sendTypingMessage(Update update){
 		baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+
 	}
 	
 
