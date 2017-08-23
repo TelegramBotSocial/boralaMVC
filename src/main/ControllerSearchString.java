@@ -14,7 +14,7 @@ public class ControllerSearchString implements ControllerSearch{
 	
 	public void search(Update update) {
 		view.sendTypingMessage(update);
-		model.searchString(update);
+		model.searchString(update, view.getStatus());
 	}	
 
 }

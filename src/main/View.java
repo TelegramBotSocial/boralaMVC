@@ -6,8 +6,6 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.TelegramBotAdapter;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ChatAction;
-import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
-import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
 import com.pengrad.telegrambot.model.request.Keyboard;
 import com.pengrad.telegrambot.model.request.KeyboardButton;
 import com.pengrad.telegrambot.model.request.ParseMode;
@@ -26,6 +24,14 @@ public class View implements Observer{
 	GetUpdatesResponse updatesResponse;
 	SendResponse sendResponse;
 	BaseResponse baseResponse;
+	
+	/* status
+	 *	== 0 -> não recebeu nenhuma informação - ação = enviar btn localização
+	 *	== 1 -> recebeu a localização - ação = enviar btn categorias
+	 * 	== 2 -> recebeu a categoria - ação = enviar (locais) e btn (escolha nova ação)
+	 */
+	private int status = 0;
+	String location = "";
 			
 	int indexMsg=0;
 	
@@ -58,8 +64,8 @@ public class View implements Observer{
 					this.callController(update);
 	
 				}else{
-					//setControllerSearch(new ControllerSearchLocation(model, this));
-					System.out.println("localização enviada");
+					setControllerSearch(new ControllerSearchLocation(model, this));
+					this.callController(update);
 				}				
 				
 			}
@@ -72,9 +78,45 @@ public class View implements Observer{
 		this.controllerSearch.search(update);
 	}
 	
-	public void update(long chatId, String resp){
-		sendResponse = bot.execute(new SendMessage(chatId, resp).parseMode(ParseMode.HTML));
-	
+	public void update(long chatId, String typeResult, String resp){
+		switch(typeResult){
+			case "buttonLoc":
+				Keyboard keyboardLoc = new ReplyKeyboardMarkup(
+						new KeyboardButton[]{
+								new KeyboardButton("Minha Localização").requestLocation(true)
+						});  
+				bot.execute(new SendMessage(chatId, resp).replyMarkup(keyboardLoc));
+				break;
+			
+			case "buttonCat":
+				Keyboard keyboardCat = new ReplyKeyboardMarkup(
+					new KeyboardButton[]{
+							new KeyboardButton("baladas"),
+							new KeyboardButton("restaurantes")
+					},
+					new KeyboardButton[]{
+							new KeyboardButton("lanchonetes"),
+							new KeyboardButton("pizzarias")
+					});  
+				bot.execute(new SendMessage(chatId, resp).replyMarkup(keyboardCat));
+				break;
+				
+			case "buttonEsc":
+				Keyboard keyboardEsc = new ReplyKeyboardMarkup(
+						new KeyboardButton[]{
+								new KeyboardButton("nova localização")
+						},new KeyboardButton[]{
+								new KeyboardButton("nova categoria")
+						}
+						);  
+				bot.execute(new SendMessage(chatId, resp).replyMarkup(keyboardEsc));
+				break;
+			
+			default: 
+				sendResponse = bot.execute(new SendMessage(chatId, resp).parseMode(ParseMode.HTML));
+				
+				break;
+		}	
 	}
 	
 	public void sendTypingMessage(Update update){
@@ -82,5 +124,12 @@ public class View implements Observer{
 
 	}
 	
-
+	public void setStatus(int newStatus){
+		this.status = newStatus;
+	}
+	
+	public int getStatus(){
+		return this.status;
+	}	
+	
 }

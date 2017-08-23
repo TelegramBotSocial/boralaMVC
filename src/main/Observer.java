@@ -2,6 +2,6 @@ package main;
 
 public interface Observer {
 
-	public void update(long chatId, String resp);
+	public void update(long chatId, String resp, String typeResult);
 	
 }

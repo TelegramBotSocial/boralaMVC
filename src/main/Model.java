@@ -24,23 +24,37 @@ public class Model implements Subject{
 		observers.add(observer);
 	}
 	
-	public void notifyObservers(long chatId, String resp){
+	public void notifyObservers(long chatId, String resp, String typeResult){
 		for(Observer observer:observers){
-			observer.update(chatId, resp);
+			observer.update(chatId, resp, typeResult);
 		}
 	}
 	
-	public void searchString(Update update){
+	public void searchString(Update update, int status){
+		//tratamento de strings
 		if(update.message().text().equals("/start")){
-			this.notifyObservers(update.message().chat().id(), "Seja Bem-vindo ao <strong>Borala</strong> bot :) Para utilizar nosso bot é necessário: enviar sua <b>LOCALIZAÇÃO</b>; posteriormente navegar em nossos menus de categorias para encontrar o lugar <b>IDEAL</b> mais próximo. E caso precise entrar em contato conosco, digite <code>'/suporte'</code> !");
+			this.notifyObservers(update.message().chat().id(), "", "Seja Bem-vindo ao <strong>Borala</strong> bot :) Para utilizar nosso bot é necessário: enviar sua <b>LOCALIZAÇÃO</b>; posteriormente navegar em nossos menus de categorias para encontrar o lugar <b>IDEAL</b> mais próximo. E caso precise entrar em contato conosco, digite <code>'/suporte'</code> !");
 			
 		} else if(update.message().text().equals("/suporte")){
-			this.notifyObservers(update.message().chat().id(), "Caso não tenhamos conseguido te <b>ajudar</b> ou tenha alguma <b>sugestão</b>, entre em contato com nosso <i>Suporte</i> na nossa central de atendimentos: www.boralabot.com.br/suporte ... <strong>Até mais</strong>");
+			this.notifyObservers(update.message().chat().id(), "", "Caso não tenhamos conseguido te <b>ajudar</b> ou tenha alguma <b>sugestão</b>, entre em contato com nosso <i>Suporte</i> na nossa central de atendimentos: www.boralabot.com.br/suporte ... <strong>Até mais</strong>");
 			
 		} else {
-			this.notifyObservers(update.message().chat().id(), "Infelizmente não conseguimos entender. Navegue em nosso <b>menu</b>!");
+			this.notifyObservers(update.message().chat().id(), "", "Infelizmente não conseguimos entender. Navegue em nosso <b>menu</b>!");
 			
 		}
+		
+		if(status==0){
+			this.notifyObservers(update.message().chat().id(), "buttonLoc", "Envie sua Localização.");
+		}else if(status==1){
+			this.notifyObservers(update.message().chat().id(), "buttonCat", "Selecione uma categoria.");			
+		}else if(status==2){
+			this.notifyObservers(update.message().chat().id(), "buttonEsc", "Deseja enviar outra localização ou categoria?");
+		}
+	}
+	
+	public void searchLocation(Update update, View view){
+		//manda selecionar a categoria
+		view.setStatus(1);
 	}
 	
 }
