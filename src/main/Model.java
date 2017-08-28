@@ -3,6 +3,7 @@ package main;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.pengrad.telegrambot.model.Location;
 import com.pengrad.telegrambot.model.Update;
 
 public class Model implements Subject{
@@ -30,7 +31,7 @@ public class Model implements Subject{
 		}
 	}
 	
-	public void searchString(Update update, int status){
+	public void searchBase(Update update, int status){
 		//tratamento de strings
 		if(update.message().text().equals("/start")){
 			this.notifyObservers(update.message().chat().id(), "", "Seja Bem-vindo ao <strong>Borala</strong> bot :) Para utilizar nosso bot é necessário: enviar sua <b>LOCALIZAÇÃO</b>; posteriormente navegar em nossos menus de categorias para encontrar o lugar <b>IDEAL</b> mais próximo. E caso precise entrar em contato conosco, digite <code>'/suporte'</code> !");
@@ -53,8 +54,22 @@ public class Model implements Subject{
 	}
 	
 	public void searchLocation(Update update, View view){
-		//manda selecionar a categoria
+		System.out.println("tratando a localização enviada");
+		Location location = update.message().location();
+				
+		String lat = location.latitude().toString();
+		String lon = location.longitude().toString();
+		
+		String locationString= lon+" "+lat;
+		
+		view.location = locationString;
+		
 		view.setStatus(1);
 	}
+	
+	public void searchResult(Update update, View view){
+		//pegar o resultado no banco de dados
+	}
+	
 	
 }

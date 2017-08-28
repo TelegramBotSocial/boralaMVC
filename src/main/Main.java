@@ -9,7 +9,7 @@ public class Main {
 		model = Model.getInstance();
 		initializeModel(model);
 		View view = new View(model);
-		model.registerObserver(view); //connection Model -> View
+		model.registerObserver(view);
 		view.receiveUsersMessages();
 
 	}

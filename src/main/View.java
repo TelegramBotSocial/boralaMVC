@@ -31,7 +31,7 @@ public class View implements Observer{
 	 * 	== 2 -> recebeu a categoria - ação = enviar (locais) e btn (escolha nova ação)
 	 */
 	private int status = 0;
-	String location = "";
+	public String location = "";
 			
 	int indexMsg=0;
 	
@@ -42,7 +42,7 @@ public class View implements Observer{
 		this.model = model; 
 	}
 	
-	public void setControllerSearch(ControllerSearch controllerSearch){ //Strategy Pattern
+	public void setControllerSearch(ControllerSearch controllerSearch){
 		this.controllerSearch = controllerSearch;
 	}
 	
@@ -60,7 +60,14 @@ public class View implements Observer{
 				
 				String resultText = update.message().text();
 				if(resultText!=null){
-					setControllerSearch(new ControllerSearchString(model, this));
+						
+					if(status==1){
+						setControllerSearch(new ControllerSearchCategoria(model, this));
+					}else if(status==2){
+						//setControllerCat(new ControllerSearchString(model, this));
+					}else{
+						setControllerSearch(new ControllerSearchBase(model, this));
+					}
 					this.callController(update);
 	
 				}else{
