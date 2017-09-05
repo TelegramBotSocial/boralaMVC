@@ -14,7 +14,7 @@ public class ControllerSearchBase implements ControllerSearch{
 	
 	public void search(Update update) {
 		view.sendTypingMessage(update);
-		model.searchBase(update, view.getStatus());
+		model.searchBase(update, view);
 	}	
 
 }

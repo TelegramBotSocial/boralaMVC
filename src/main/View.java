@@ -6,6 +6,8 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.TelegramBotAdapter;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ChatAction;
+import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
+import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
 import com.pengrad.telegrambot.model.request.Keyboard;
 import com.pengrad.telegrambot.model.request.KeyboardButton;
 import com.pengrad.telegrambot.model.request.ParseMode;
@@ -31,6 +33,7 @@ public class View implements Observer{
 	 * 	== 2 -> recebeu a categoria - ação = enviar (locais) e btn (escolha nova ação)
 	 */
 	private int status = 0;
+	public boolean notFound = false;
 	public String location = "";
 			
 	int indexMsg=0;
@@ -61,12 +64,14 @@ public class View implements Observer{
 				String resultText = update.message().text();
 				if(resultText!=null){
 						
-					if(status==1){
-						setControllerSearch(new ControllerSearchCategoria(model, this));
-					}else if(status==2){
-						//setControllerCat(new ControllerSearchString(model, this));
-					}else{
-						setControllerSearch(new ControllerSearchBase(model, this));
+					setControllerSearch(new ControllerSearchBase(model, this));
+					if(notFound){						
+						if(status==1){
+							setControllerSearch(new ControllerSearchCategoria(model, this));
+						}else if(status==2){
+							setControllerSearch(new ControllerSearchDecision(model, this));
+						}
+						notFound=false;
 					}
 					this.callController(update);
 	
@@ -124,6 +129,15 @@ public class View implements Observer{
 				
 				break;
 		}	
+	}
+	
+	public void update(long chatId, String resp, String[] inlinesBtn){
+		InlineKeyboardMarkup buttonsClient = new InlineKeyboardMarkup(
+				new InlineKeyboardButton[]{
+						new InlineKeyboardButton("Conheça Melhor ").url(inlinesBtn[0]),
+						new InlineKeyboardButton("Abrir no Maps ").url(inlinesBtn[1])
+				});
+		bot.execute(new SendMessage(chatId, resp).parseMode(ParseMode.HTML).replyMarkup(buttonsClient));
 	}
 	
 	public void sendTypingMessage(Update update){
