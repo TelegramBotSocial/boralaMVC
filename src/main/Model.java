@@ -60,6 +60,7 @@ public class Model implements Subject{
 		}else if(status==2){
 			this.notifyObservers(update.message().chat().id(), "buttonEsc", "Deseja enviar outra localização ou categoria?");
 		}
+
 	}
 	
 	public void searchLocation(Update update, View view){
