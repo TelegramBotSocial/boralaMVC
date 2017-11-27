@@ -5,4 +5,4 @@
 
 ## Diagrama MVC
 
-![Diagrama MVC](https://github.com/TelegramBotSocial/boralaMVC/blob/master/boralaMVC.png) 
+![Diagrama MVC](https://github.com/TelegramBotSocial/boralaMVC/public/blob/master/boralaMVC.png) 
