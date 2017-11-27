@@ -13,9 +13,9 @@ BOT desenvolvido para o telegram com:
 
 ## Telas do BOT 
 
-![Borala resultados](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_result.png) 
-![Borala abrir com Google Maps](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_maps.png) 
-![Borala suporte](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_suporte.png) 
+![Borala resultados](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_result.jpg) 
+![Borala abrir com Google Maps](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_maps.jpg) 
+![Borala suporte](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_suporte.jpg) 
 
 ## Diagrama de classes
 
