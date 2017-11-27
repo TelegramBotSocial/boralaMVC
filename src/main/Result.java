@@ -32,10 +32,10 @@ public class Result {
 			String msgFinal = "";
 			try{
 				while(res.next()){
-					/* ORGANIZAR RESPOSTA AO USU¡RIO
+					/* ORGANIZAR RESPOSTA AO USU√ÅRIO
 					* Nome do local: 
 					* info:
-					* PromoÁ„o da semana: 
+					* Promo√ß√£o da semana: 
 					* btn com o GPS:
 					* btn da url do local: 
 					* */
@@ -43,7 +43,7 @@ public class Result {
 					msgFinal += res.getString("info")+"! ";
 					msgFinal += "Localizado em: "+res.getString("city");
 					if(!res.getString("promo").equals("")){
-						msgFinal += " <strong>PROMO«√O:</strong> "+res.getString("promo");
+						msgFinal += " <strong>PROMO√á√ÉO:</strong> "+res.getString("promo");
 					}
 					
 					setUrlGoogle(res.getString("geometria"));						

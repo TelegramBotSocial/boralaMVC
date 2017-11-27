@@ -10,7 +10,7 @@ public class ConnectionsDB {
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/db_borala1", "postgres", "postgres");
 			return con;
 		}catch(ClassNotFoundException ex){
-			System.out.println("ERRO ENCONTRADO NA CONEX√O (servidor): ");
+			System.out.println("ERRO ENCONTRADO NA CONEX√ÉO (servidor): ");
 			ex.printStackTrace();
 			return null;
 		}catch(SQLException ex){

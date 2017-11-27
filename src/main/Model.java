@@ -41,30 +41,26 @@ public class Model implements Subject{
 		int status = view.getStatus();
 		//tratamento de strings / mensagem de base
 		if(update.message().text().equals("/start")){
-			this.notifyObservers(update.message().chat().id(), "", "Seja Bem-vindo ao <strong>Borala</strong> bot :) Para utilizar nosso bot È necess·rio: enviar sua <b>LOCALIZA«√O</b>; posteriormente navegar em nossos menus de categorias para encontrar o lugar <b>IDEAL</b> mais prÛximo. E caso precise entrar em contato conosco, digite <code>'/suporte'</code> !");
+			this.notifyObservers(update.message().chat().id(), "", "Seja Bem-vindo ao <strong>Borala</strong> bot :) Para utilizar nosso bot √© necess√°rio: enviar sua <b>LOCALIZA√á√ÉO</b>; posteriormente navegar em nossos menus de categorias para encontrar o lugar <b>IDEAL</b> mais pr√≥ximo. E caso precise entrar em contato conosco, digite <code>'/suporte'</code> !");
 			
 		} else if(update.message().text().equals("/suporte")){
-			this.notifyObservers(update.message().chat().id(), "", "Caso n„o tenhamos conseguido te <b>ajudar</b> ou tenha alguma <b>sugest„o</b>, entre em contato com nosso <i>Suporte</i> na nossa central de atendimentos: www.boralabot.com.br/suporte ... <strong>AtÈ mais</strong>");
+			this.notifyObservers(update.message().chat().id(), "", "Caso n√£o tenhamos conseguido te <b>ajudar</b> ou tenha alguma <b>sugest√£o</b>, entre em contato com nosso <i>Suporte</i> na nossa central de atendimentos: www.boralabot.com.br/suporte ... <strong>At√© mais</strong>");
 			
 		} else {
 			if(status==0){
-				this.notifyObservers(update.message().chat().id(), "", "Infelizmente n„o conseguimos entender. Navegue em nosso <b>menu</b>!");
+				this.notifyObservers(update.message().chat().id(), "", "Infelizmente n√£o conseguimos entender. Navegue em nosso <b>menu</b>!");
 			}
 			view.notFound = true;
 		}
 		
 		if(status==0){
-			this.notifyObservers(update.message().chat().id(), "buttonLoc", "Envie sua LocalizaÁ„o.");
-		}else if(status==1){
-			this.notifyObservers(update.message().chat().id(), "buttonCat", "Selecione uma categoria.");			
-		}else if(status==2){
-			this.notifyObservers(update.message().chat().id(), "buttonEsc", "Deseja enviar outra localizaÁ„o ou categoria?");
+			this.notifyObservers(update.message().chat().id(), "buttonLoc", "Envie sua Localiza√ß√£o.");
 		}
 
 	}
 	
 	public void searchLocation(Update update, View view){
-		System.out.println("tratando a localizaÁ„o enviada");
+		System.out.println("tratando a localiza√ß√£o enviada");
 		Location location = update.message().location();
 				
 		String lat = location.latitude().toString();
@@ -91,17 +87,17 @@ public class Model implements Subject{
 	}
 	
 	public void searchDecision(Update update, View view){
-		if(update.message().text().equals("nova localizaÁ„o")){
+		if(update.message().text().equals("nova localiza√ß√£o")){
 			view.location="";
 			view.setStatus(0);
-			this.notifyObservers(update.message().chat().id(), "buttonLoc", "Envie sua LocalizaÁ„o.");
+			this.notifyObservers(update.message().chat().id(), "buttonLoc", "Envie sua Localiza√ß√£o.");
 			
 		}else if(update.message().text().equals("nova categoria")){
 			view.setStatus(1);			
 			this.notifyObservers(update.message().chat().id(), "buttonCat", "Selecione uma categoria.");
 			
 		} else {
-			this.notifyObservers(update.message().chat().id(), "buttonEsc", "Deseja enviar outra localizaÁ„o ou categoria?");
+			this.notifyObservers(update.message().chat().id(), "buttonEsc", "Deseja enviar outra localiza√ß√£o ou categoria?");
 		}	
 		
 	}
@@ -112,9 +108,9 @@ public class Model implements Subject{
 		Result resultado = new Result(view.location, update.message().text());
 		if(resultado.getRes()!=null){
 			
-			//caso n„o encontre nenhum resultado
+			//caso n√£o encontre nenhum resultado
 			if(resultado.getRes().size()==0){
-				this.notifyObservers(update.message().chat().id(), "", "N„o foi encontrado nenhum local nas especificaÁıes selecionadas, tente outras");
+				this.notifyObservers(update.message().chat().id(), "", "N√£o foi encontrado nenhum local nas especifica√ß√µes selecionadas, tente outras");
 			
 			//responde com a lista de resultado encontrado no banco
 			}else{
@@ -131,8 +127,13 @@ public class Model implements Subject{
 			}
 		}
 		
-		this.notifyObservers(update.message().chat().id(), "buttonEsc", "Deseja enviar outra localizaÁ„o ou categoria?");
+		this.notifyObservers(update.message().chat().id(), "buttonEsc", "Deseja enviar outra localiza√ß√£o ou categoria?");
 		view.setStatus(2);
+	}
+
+	public void realTime(Update update, View view) {
+		System.out.println("inicial");
+		
 	}
 	
 	

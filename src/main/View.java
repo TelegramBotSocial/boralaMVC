@@ -27,11 +27,6 @@ public class View implements Observer{
 	SendResponse sendResponse;
 	BaseResponse baseResponse;
 	
-	/* status
-	 *	== 0 -> não recebeu nenhuma informação - ação = enviar btn localização
-	 *	== 1 -> recebeu a localização - ação = enviar btn categorias
-	 * 	== 2 -> recebeu a categoria - ação = enviar (locais) e btn (escolha nova ação)
-	 */
 	private int status = 0;
 	public boolean notFound = false;
 	public String location = "";
@@ -71,7 +66,7 @@ public class View implements Observer{
 						}else if(status==2){
 							setControllerSearch(new ControllerSearchDecision(model, this));
 						}
-						notFound=false;
+						//notFound=false;
 					}
 					this.callController(update);
 	
@@ -95,7 +90,7 @@ public class View implements Observer{
 			case "buttonLoc":
 				Keyboard keyboardLoc = new ReplyKeyboardMarkup(
 						new KeyboardButton[]{
-								new KeyboardButton("Minha Localização").requestLocation(true)
+								new KeyboardButton("Minha LocalizaÃ§Ã£o").requestLocation(true)
 						});  
 				bot.execute(new SendMessage(chatId, resp).replyMarkup(keyboardLoc));
 				break;
@@ -116,7 +111,7 @@ public class View implements Observer{
 			case "buttonEsc":
 				Keyboard keyboardEsc = new ReplyKeyboardMarkup(
 						new KeyboardButton[]{
-								new KeyboardButton("nova localização")
+								new KeyboardButton("nova localizaÃ§Ã£o")
 						},new KeyboardButton[]{
 								new KeyboardButton("nova categoria")
 						}
@@ -134,7 +129,7 @@ public class View implements Observer{
 	public void update(long chatId, String resp, String[] inlinesBtn){
 		InlineKeyboardMarkup buttonsClient = new InlineKeyboardMarkup(
 				new InlineKeyboardButton[]{
-						new InlineKeyboardButton("Conheça Melhor ").url(inlinesBtn[0]),
+						new InlineKeyboardButton("ConheÃ§a Melhor ").url(inlinesBtn[0]),
 						new InlineKeyboardButton("Abrir no Maps ").url(inlinesBtn[1])
 				});
 		bot.execute(new SendMessage(chatId, resp).parseMode(ParseMode.HTML).replyMarkup(buttonsClient));
