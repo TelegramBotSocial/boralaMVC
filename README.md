@@ -13,6 +13,8 @@ BOT desenvolvido para o telegram com:
 
 ## Telas do BOT 
 
+Imagens das telas em tamanhos maiores podem ser encontradas em `/public`
+
 * Exemplo de resultados:
 
 ![Borala resultados](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_result_tiny.jpg) 
