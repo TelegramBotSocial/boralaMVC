@@ -7,14 +7,19 @@ BOT desenvolvido para o telegram com:
 
 ## Autores
 
-* Carlos Alberto Ferreira de Noronha
+* Carlos Alberto Noronha
 * Christian Oliveira
 * Danilo Freire
 
 ## Telas do BOT 
 
+Exemplo de resultados:
 ![Borala resultados](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_result.jpg) 
+
+Exemplo abrir pelo google maps:
 ![Borala abrir com Google Maps](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_maps.jpg) 
+
+Exemplo suporte no app:
 ![Borala suporte](https://github.com/TelegramBotSocial/boralaMVC/blob/master/public/print_suporte.jpg) 
 
 ## Diagrama de classes
